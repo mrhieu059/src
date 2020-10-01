@@ -32,19 +32,21 @@ static const char *colors[][3]      = {
 
 
 /* tagging */
-static const char *tags[] = { "Cli", "Firefox", "ϻusic", "ϻovie", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1:Cli", "2:Firefox", "3:ϻusic", "4:ϻovie", "5:LibreOffice", "6:Torrent", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance      title       tags mask     isfloating   monitor */
-	{ "Firefox",  NULL,         NULL,       1 << 1,       0,           -1 },
-	{ "st",       "music",      NULL,       1 << 2,       0,           -1 },
-	{ "st",       "st",         NULL,       1 << 0,       0,           -1 },
-	{ "st",       "temporary",  "float",    0,            1,           -1 },
-	{ "mpv",       "gl",        NULL,       1 << 3,       1,           -1 },
+	/* class      		instance     	 title       tags mask     isfloating   monitor */
+	{ "Firefox",  		NULL,        	 NULL,       1 << 1,       0,           -1 },
+	{ "st",       		"music",     	 NULL,       1 << 2,       0,           -1 },
+	{ "st",       		"st",        	 NULL,       1 << 0,       0,           -1 },
+	{ "st",       		"temporary", 	 "float",    0,            1,           -1 },
+	{ "mpv",      		"xv",        	 NULL,       1 << 3,       1,           -1 },
+	{ "libreoffice",	NULL,	 	 NULL,       1 << 4,       1,           -1 },
+	{ "qBittorrent", 	"qbittorrent",	 NULL,       1 << 5,       0,           -1 },
 };
 
 /* layout(s) */
@@ -119,10 +121,18 @@ static Key keys[] = {
 //	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("$HOME/.local/dot/myscript/volume.sh + ; pkill -RTMIN+12 dwmblocks")},
 //	{0,XF86XK_MonBrightnessUp,	spawn, SHCMD("light -A 5 ; pkill -RTMIN+10 dwmblocks ")},
 //	{0,XF86XK_MonBrightnessDown,	spawn, SHCMD("light -U 5 ; pkill -RTMIN+10 dwmblocks ")},
-	{MODKEY|ALTKEY,	 		XK_n, spawn , SHCMD("st -n music -c st -t ncmpcpp -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
+	{0,XF86XK_AudioPlay,		spawn, SHCMD("mpc toggle")},
+	{0,XF86XK_AudioNext,		spawn, SHCMD("mpc next")},
+	{0,XF86XK_AudioPrev,		spawn, SHCMD("mpc prev")},
+	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("mixer vol -5")},
+	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("mixer vol +5")},
+	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("st -n music -c st -t ncmpcpp -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
 	{MODKEY|ALTKEY,	 		XK_s, spawn , SHCMD("sxiv -t $HOME/.local/dot/wals")}, 
 	{MODKEY|ShiftMask,     	        XK_Return, spawn, SHCMD("st -n temporary -c st -t float")          },
 	{MODKEY|ALTKEY,     	        XK_r, spawn, SHCMD("$HOME/.local/dot/myscript/redshift.sh ; pkill -RTMIN+10 dwmblocks ")},
+	{MODKEY|ALTKEY,     	        XK_y, spawn, SHCMD("$HOME/.local/dot/myscript/getmp3.sh")},
+	{MODKEY|ShiftMask,     	        XK_w, spawn, SHCMD("firefox -p")},
+	{MODKEY|ShiftMask,     	        XK_f, spawn, SHCMD("st -n temporary -c st -t float -e nnn")},
 	//{MODKEY|ALTKEY,     	        XK_r, spawn, SHCMD("redshift -c ~/.config/redshift/redshift.conf")          },
 
 };

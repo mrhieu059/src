@@ -11,8 +11,9 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
 static const int showtab			= showtab_auto;        /* Default tab bar show mode */
 static const int toptab				= True;               /* False means bottom tab bar */
-static const char *fonts[]          = { "Hack:style=Regular:pixelsize=14" };
-static const char dmenufont[]       = "Hack:style=Regular:pixelsize=18";
+//static const char *fonts[]          = { "Hack:style=Regular:pixelsize=14" };
+static const char *fonts[]          = { "FiraCode NF:style=Regular:pixelsize=14" };
+static const char dmenufont[]       = "Hack:style=Regular:pixelsize=14";
 //static const char col_gray1[]       = "#2e3440";
 static const char col_gray1[]       = "#70A9A1";
 static const char col_gray2[]       = "#444444";
@@ -41,11 +42,11 @@ static const Rule rules[] = {
 	 */
 	/* class      		instance     	 title       tags mask     isfloating   monitor */
 	{ "Firefox",  		NULL,        	 NULL,       1 << 1,       0,           -1 },
-	{ "st",       		"music",     	 NULL,       1 << 2,       0,           -1 },
-	{ "st",       		"st",        	 NULL,       1 << 0,       0,           -1 },
-	{ "st",       		"temporary", 	 "float",    0,            1,           -1 },
+	{ "Alacritty", 		"music",     	 "ncmpcpp",  1 << 2,       0,           -1 },
+	{ "Alacritty",      	"Alacritty",   	 NULL,       1 << 0,       0,           -1 },
+	{ "Alacritty", 		"float", 	 "temporary",    0,            1,           -1 },
 	{ "mpv",      		"xv",        	 NULL,       1 << 3,       1,           -1 },
-	{ "libreoffice",	NULL,	 	 NULL,       1 << 4,       1,           -1 },
+	{ "libreoffice",	NULL,	 	 NULL,       1 << 4,       0,           -1 },
 	{ "qBittorrent", 	"qbittorrent",	 NULL,       1 << 5,       0,           -1 },
 };
 
@@ -76,7 +77,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray2, "-sb", col_gray1, "-sf", col_gray2, "-c", "-g", "3", "-l", "5", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -126,13 +127,12 @@ static Key keys[] = {
 	{0,XF86XK_AudioPrev,		spawn, SHCMD("mpc prev")},
 	{0,XF86XK_AudioLowerVolume,	spawn, SHCMD("mixer vol -5")},
 	{0,XF86XK_AudioRaiseVolume,	spawn, SHCMD("mixer vol +5")},
-	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("st -n music -c st -t ncmpcpp -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
+	{MODKEY|ShiftMask,	 	XK_m, spawn , SHCMD("alacritty --class music,Alacritty -t ncmpcpp -e $HOME/.local/dot/myscript/ncmpcpp.sh")}, 
 	{MODKEY|ALTKEY,	 		XK_s, spawn , SHCMD("sxiv -t $HOME/.local/dot/wals")}, 
-	{MODKEY|ShiftMask,     	        XK_Return, spawn, SHCMD("st -n temporary -c st -t float")          },
-	{MODKEY|ALTKEY,     	        XK_r, spawn, SHCMD("$HOME/.local/dot/myscript/redshift.sh ; pkill -RTMIN+10 dwmblocks ")},
+	{MODKEY|ShiftMask,     	        XK_Return, spawn, SHCMD("alacritty --class float,Alacritty -t temporary")          },
 	{MODKEY|ALTKEY,     	        XK_y, spawn, SHCMD("$HOME/.local/dot/myscript/getmp3.sh")},
 	{MODKEY|ShiftMask,     	        XK_w, spawn, SHCMD("firefox -p")},
-	{MODKEY|ShiftMask,     	        XK_f, spawn, SHCMD("st -n temporary -c st -t float -e nnn")},
+	{MODKEY|ShiftMask,     	        XK_f, spawn, SHCMD("alacritty --class float,Alacritty -t temporary -e nnn")},
 	//{MODKEY|ALTKEY,     	        XK_r, spawn, SHCMD("redshift -c ~/.config/redshift/redshift.conf")          },
 
 };
